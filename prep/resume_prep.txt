@@ -1,0 +1,23 @@
+Resume Prepartion:
+    This is to explain how to create resume with chatgpt.
+
+Steps:
+1. Creat a work story prompt for ChatGPT.
+
+I want to make resume for following sections.
+
+My name is Hari. I have been working in abc company as bigquery developer.
+
+My project detail,
+I am working in healthcare analytics projects. We will get business requirements in RAT(request allocation tool).
+We develop bigquery scripts as per business requirements.
+Writing a complex queries 
+
+SUMMARY:
+Strong understanding of business processes with good experience in development. 
+Adjusted software parameters to boost performance and incorporate new features. 
+Handled performance tuning by index,hints.
+Ability to work in flexible timings and meet deadline. 
+Good Exposure in Analytical functions, Triggers.
+
+
