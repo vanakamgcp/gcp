@@ -1,0 +1,2 @@
+1. Bigquery Optimization
+2. Partitioning and Clustering
