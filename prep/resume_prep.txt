@@ -21,3 +21,10 @@ Ability to work in flexible timings and meet deadline.
 Good Exposure in Analytical functions, Triggers.
 
 
+Strong Understanding of Google Analytics data and converting them into needful format.
+Responsible for analyzing the analytics data for hidden insights.
+Hands-on Experience in Handling the Google analytics data.
+Experience in writing complex queries using the WITH clause.
+Extensively used Aggregate functions and Analytical functions to write clean SQL scripts.
+Debugged existing codes for Cost reduction.
+Scheduling queries in GCP.
