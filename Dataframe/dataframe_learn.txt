@@ -1,0 +1,19 @@
+SQL concepts:
+SELECT:
+1. All columns
+2. Specific columns
+3. Column with alias name
+4. Additional calculated columns
+5. Limit the rows
+6. SELECT DISTINCT data from the column
+
+WHERE:
+1. +, -, *, /
+2. AND, OR
+3. IN, NOT IN
+4. BETWEEN..AND
+5. LIKE, NOT LIKE
+
+ORDER:
+1. Order by one or more columns
+2. ASC and DESC 
