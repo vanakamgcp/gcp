@@ -2,7 +2,7 @@ SQL concepts:
 SELECT:
 1. All columns
 2. Specific columns
-3. Column with alias name
+3. Column with alias name (YOU CAN'T GIVE ALIAS NAME.INSTEAD YOU CAN CHANGE THE COLUMN NAME)
 4. Additional calculated columns
 5. Limit the rows
 6. SELECT DISTINCT data from the column

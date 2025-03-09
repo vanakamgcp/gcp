@@ -88,3 +88,16 @@ df[df['FIRST_NAME'].str.startswith('A')]
 df[~df['FIRST_NAME'].str.contains('St',case=False,na=False)]
 
 df[~df['FIRST_NAME'].str.startswith('A')]
+
+# ORDER BY ASC, DSC
+# sort_values(by = col_name, ascending = True)
+# default ascending value is True
+df.sort_values(by='SALARY', ascending = True)
+
+# sort by DEPARTMENT_ID in ASC and SALARY by DSC
+df.sort_values(by=['DEPARTMENT_ID','SALARY'], ascending=[True,False])
+
+df[['DEPARTMENT_ID','SALARY']].sort_values(by=['DEPARTMENT_ID','SALARY'], ascending=[True,False])
+
+df[df['DEPARTMENT_ID'].isin([10,20,30,40,50])][['DEPARTMENT_ID','SALARY']].sort_values(by=['DEPARTMENT_ID','SALARY'], ascending=[True,False])
+
