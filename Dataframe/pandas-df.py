@@ -101,3 +101,31 @@ df[['DEPARTMENT_ID','SALARY']].sort_values(by=['DEPARTMENT_ID','SALARY'], ascend
 
 df[df['DEPARTMENT_ID'].isin([10,20,30,40,50])][['DEPARTMENT_ID','SALARY']].sort_values(by=['DEPARTMENT_ID','SALARY'], ascending=[True,False])
 
+# Fetch UNIQUE records on SINGLE column
+df['DEPARTMENT_ID'].unique().tolist()
+
+# It returns numpy.ndarray. Using .tolist() to convert into list
+
+
+# drop_dublicates
+# Returns the unique values
+data = {'Name': ['Alice', 'Bob', 'Charlie', 'Alice', 'David', 'Bob'],
+        'Age': [25, 30, 25, 25, 22, 30],
+        'Score': [88, 75, 92, 88, 80, 75]}
+
+df1 = pd.DataFrame(data)
+
+df1.drop_duplicates()
+
+df1['Name'].drop_duplicates()
+
+# Fetch unique records based on specific columns
+df1.drop_duplicates(subset=['Name'],keep='first')
+
+df1.drop_duplicates(subset=['Age'],keep='last')
+
+# Adding new colm
+
+df1['New_colm'] = 'NA'
+
+df1
