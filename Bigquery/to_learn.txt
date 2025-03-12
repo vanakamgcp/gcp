@@ -3,7 +3,7 @@
 
 Interview feedback:
 1. Sequence in bigquery.
-2. PIVOT in biquery
+2. PIVOT in biquery (Transpose rows)
 3. QUALIFY
 4. Explain plan in bigquery
 
