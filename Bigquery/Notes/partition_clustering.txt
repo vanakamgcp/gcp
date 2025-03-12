@@ -1,8 +1,7 @@
 Bigquery Partitions:
-
-It is a technique to devide the large table into smaller segments based on specific columns.
-It is to avoid complete scan of table.
-Avoid partitioning the table with column have more unique data.
+    - It is a technique to devide the large table into smaller segments based on specific columns.
+    - It is to avoid complete scan of table.
+    - Avoid partitioning the table with column have more unique data.
 
 Types:
 1. Integer based Partitions
