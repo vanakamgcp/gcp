@@ -1,2 +1,11 @@
 1. Bigquery Optimization
 2. Partitioning and Clustering
+
+Interview feedback:
+1. Sequence in bigquery.
+2. PIVOT in biquery
+3. QUALIFY
+4. Explain plan in bigquery
+
+LinkedIn post:
+1. Query Cost
