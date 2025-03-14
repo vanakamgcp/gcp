@@ -1,0 +1,6 @@
+What is bigquery taxamony in biglake table?
+Diff bn External table and BigLake table?
+Usecases for biglake table?
+
+External tables doesnt has any connection id. BigLake tables contains connection id.
+BigLake table can have column level access policies.

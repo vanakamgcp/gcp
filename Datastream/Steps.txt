@@ -1,0 +1,13 @@
+Datastream:
+    It is a service used to capture the CDC from source to destination.
+    Ex: If anything changes is Postgres table in Cloud SQL, The changes automatically reflected in Bigquery table.
+
+    It continously streams the changes from source to destination.
+
+Steps:
+1. Enable Datastream API.
+2. Create connection profiles for both source and destination.
+3. Create stream for source to destination.
+4. Start the created stream.
+
+Postgres is connected with BQ using public IP address through Datastream.

@@ -1,0 +1,8 @@
+My name is AJITHKUMAR.I am a gcp data engineer with 6 years hands on experience data migration from oracle and hive to bigquery.
+I have hands on experience in bigquery, gcp workflows, cloud storage, cloud run, eventarc, pub sub.
+I have created a framework for batch data migration using gcp native services.
+I also have knowledge on data maodelling.
+I have great experience in writing complex queries in bigquery.
+
+Now i want to create portfolio for my profile and host it on github.
+Generate html,css code to create creative portfolio to catch recruiters eye.
