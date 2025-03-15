@@ -1,0 +1,46 @@
+PYTHON
+
+Created by GUIDO VAN ROSSUM in 80's.
+
+The first version is released in 1991.
+
+He started to develop PYTHON as hobby.
+
+The Name python is inspired the BBC's TV show "The MONDY's Python Circus"
+
+
+Python is Intrepreter language.
+High level programming language.
+Human friendly.
+
+Intrepreter Language-Executes line by line. Stop the execution when the first error occurs.
+
+Compiler Language - Executes only with zero error codes.
+
+
+Why Python?
+
+Easy to learn.
+Used in wide range of fields almost every field
+
+Pro's:
+Beginner friendly
+Flexible and Extensible
+Extensive Libraries
+AI and ML.
+
+Cons:
+Slower than compiled language
+Memory consumption and Garpage collection
+
+Phase-1:
+1.DataTypes and Variables
+2.Operators
+3.String Methods
+4.Conditionals
+5.Functions
+6.List
+7.Tuple
+8.set
+9.Loops
+10.Dict
