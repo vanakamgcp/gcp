@@ -4,3 +4,5 @@ import pandas as pd
 df = pd.read_csv('/Users/ajithkumarj/coder_mode/gcp/sample_data/employees.csv')
 
 df.groupby('DEPARTMENT_ID')['SALARY'].sum()
+
+df.groupby('DEPARTMENT_ID')['SALARY'].max()

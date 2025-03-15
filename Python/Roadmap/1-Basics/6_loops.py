@@ -12,6 +12,7 @@ while <expression>:
 cnt=0
 while cnt>=0:
     print('given is greater than zero')
+    print(cnt)
     cnt=-5
 
 cnt=0
