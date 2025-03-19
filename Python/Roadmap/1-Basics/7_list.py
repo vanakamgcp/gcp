@@ -11,6 +11,7 @@ List :
 
 List methods :
     insert(idx,value)
+    append(value)
     extend(list|tuple|set)
     remove(val)
     pop(idx)
