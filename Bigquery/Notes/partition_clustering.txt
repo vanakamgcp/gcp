@@ -42,6 +42,7 @@ Types:
 Limitations:
 1. A bigquery does not support multi column partitions. It can have only one column partition.
 2. A single table can have 10000 partitions.
+3. Each partition can have max 5gb of data.
 
 Metadata:
     INFORMATION_SCHEMA.PARTITIONS 
