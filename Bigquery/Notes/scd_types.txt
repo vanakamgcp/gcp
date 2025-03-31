@@ -1,0 +1,37 @@
+SCD - Slowly Changing Dimensions
+
+SCD is a data warehousing concept to manage and track the changes in data. 
+Ex: Customer is changing their address.
+
+There are commonly used 6 types in SCD.
+
+SCD type 0 : 
+    - Immutable type. There will not be any change in data.
+    - New changes or updates will be ignored.
+    - used for static data store.
+    EX: Adhaar Number
+
+SCD type 1 :
+    - Update the old data with new data.
+    - The old data will not be captured.
+    - Used when history is not required.
+    Ex: Updating correction in customer_name in ecommerce site.
+
+SCD type 2 :
+    - Captures full history with new added columns like 'is_active' or 'valid_from', 'valid_to'.
+    - The status of new record become 'TRUE' and Old record become 'FALSE' in 'is_active' column.
+    and 'valid_to' colm will be NULL for latest record.
+    - The records will be keep adding and keeping old values as well.
+    Ex: Captures all the history of employees designation with start_dt and end_dt.
+    
+SCD type 3 :
+    - Captures the limited history information by adding limited extra columns.
+    Ex: Adding 3 extra columns prev_add1, prev_add2, prev_add3 to track the last three address of the 
+    customer in customer table. Only last three records will be stored.
+
+SCD type 4 :
+    - It is like SCD 2 but here we stores all the history in separate table.
+    - By this method source table contains only relevent data, very useful for optimizing.
+
+
+Link - https://medium.com/@kazarmax/scd-types-explained-with-sql-a-guide-for-data-engineers-a26a07cf5c60
