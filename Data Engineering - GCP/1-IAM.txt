@@ -1,0 +1,35 @@
+What is IAM?
+IAM stands for Identity and Access Management.
+It helps you control who (identity) can do what (role/permission) on which resource (BigQuery, Cloud Run, etc.).
+
+👤 Identity
+Any user, group, or service account.
+Examples: ajit@gmail.com, a team group, a Cloud Function.
+
+🧰 Roles
+Define what actions the identity can perform.
+Three types:
+    Basic roles (Viewer, Editor, Owner)
+    Predefined roles (e.g., roles/bigquery.dataViewer)
+    Custom roles (only if needed, advanced use)
+
+📌 Example: Accessing BigQuery
+To access BigQuery:
+    Assign a role like BigQuery Data Viewer to mail id.
+    This gives a permission to view datasets and tables.
+
+Other common roles:
+BigQuery Data Editor – for editing data
+BigQuery Admin – full access to manage
+
+📌 Example: Accessing Cloud Run / Workflows
+Similar idea:
+    Cloud Run needs roles like Cloud Run Invoker or Admin
+    Workflows might need Workflow Editor, Workflow Invoker
+
+🔑 Principle of Least Privilege
+    Always give only the required access — not more, not less.
+
+📄 How to Assign Access
+    Use IAM tab in GCP Console
+    Or with gcloud CLI

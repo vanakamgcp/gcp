@@ -1,0 +1,1 @@
+Bigquery Data Viewer role - User can view the dataset and table from console. But they can't query the table.
