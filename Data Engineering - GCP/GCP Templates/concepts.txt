@@ -1,0 +1,11 @@
+Create a plug and play type of ETL framework inside GCP.
+E-T-L
+    Two types of extraction.
+        * Extract the data from source and load it to GCS. (API's or Files)
+            Entire ETL flow : SOURCE - GCS - BIGQUEY LAYERS
+        * Extraction starts from GCS. (Other tools (Ab-initio, talend,..etc) takes care of loading data to GCS)
+            Entire ETL flow : GCS - BIGQUERY LAYERS
+
+SOURCE - GCS :
+Option 1:
+    
