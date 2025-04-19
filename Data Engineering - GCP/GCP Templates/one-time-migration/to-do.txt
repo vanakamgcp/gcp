@@ -1,0 +1,16 @@
+1. cloud run functions - 
+    Read folder/file names from gcs and generate dynamaic sql.
+    Trigger workflows with generated sql. (100 sqls/workflows)
+2. Cloud scheduler/ Event based
+    Schedule cloud run job to trigger.
+    or
+    Once the data is loaded in gcs upload some trigger file in bucket to trigger cloud run.
+3. Workflows
+    Execute in parallel bigquery jobs given by cloud run.
+    Track all jobs.
+4. Auditing.
+    Audit table in bigquery.
+    track file names.
+    bq job status and error if any.
+    count.
+5. Estimate cost for entire process.

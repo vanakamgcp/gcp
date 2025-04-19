@@ -1,0 +1,2 @@
+1. load json data to bigquery with data cleansing.
+2. 
