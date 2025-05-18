@@ -1,0 +1,54 @@
+# Steps to Pull Latest Changes from Main Branch to Sub Branch
+
+1. **Switch to the Sub Branch**:
+    ```
+    git checkout <sub-branch-name>
+    ```
+
+2. **Pull the Latest Changes from the Main Branch**:
+    ```
+    git pull origin main
+    ```
+
+3. **Resolve Any Merge Conflicts (if applicable)**:
+    - Open the files with conflicts.
+    - Resolve the conflicts manually.
+    - Mark the conflicts as resolved:
+      ```
+      git add <file-name>
+      ```
+
+4. **Commit the Merge (if applicable)**:
+    ```
+    git commit -m "Merged main into <sub-branch-name>"
+    ```
+
+5. **Push the Updated Sub Branch to the Remote Repository**:
+    ```
+    git push origin <sub-branch-name>
+    ```
+
+6. **If the Sub Branch Has Changes to Be Pushed to Main**:
+    - First, ensure the sub branch is up-to-date with the latest changes from the main branch (steps 1–4 above).
+    - Switch to the main branch:
+      ```
+      git checkout main
+      ```
+    - Pull the latest changes from the remote main branch:
+      ```
+      git pull origin main
+      ```
+    - Merge the sub branch into the main branch:
+      ```
+      git merge <sub-branch-name>
+      ```
+    - Resolve any merge conflicts (if applicable) and commit the merge:
+      ```
+      git commit -m "Merged <sub-branch-name> into main"
+      ```
+    - Push the updated main branch to the remote repository:
+      ```
+      git push origin main
+      ```
+
+Replace `<sub-branch-name>` with the name of your sub branch.

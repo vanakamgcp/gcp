@@ -1,76 +1,83 @@
-from google.cloud import bigquery, storage
-from google.api_core.exceptions import GoogleAPIError
-from datetime import datetime
-import pandas as pd
 import json
-import io
+import logging
+import os
+from google.cloud import storage, bigquery
+from google.api_core.exceptions import GoogleAPIError
+from tenacity import retry, stop_after_attempt, wait_exponential
 
+# Configure logging
+logging.basicConfig(level=logging.INFO)
 
-def load_and_process_json_to_bigquery(
-    gcs_bucket: str,
-    gcs_blob_path: str,
-    dataset_id: str,
-    table_id: str,
-    project_id: str,
-    write_disposition: str = "WRITE_APPEND"
-) -> dict:
-    """
-    Reads JSON from GCS, processes it, and loads it into BigQuery.
-
-    Returns:
-        dict: Audit info including job status, row count, errors, timings.
-    """
-
-    job_start = datetime.now()
-    audit_output = {
-        "job_start_time": job_start,
-        "job_end_time": None,
-        "row_count": 0,
-        "status": "FAILED",
-        "error": None,
-        "source_uri": f"gs://{gcs_bucket}/{gcs_blob_path}",
-        "target_table": f"{project_id}.{dataset_id}.{table_id}",
-    }
-
+# Retry configuration
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=2, max=10))
+def download_json_from_gcs(bucket_name, source_blob_name):
+    """Download a JSON file from GCS."""
     try:
-        # Step 1: Read file from GCS
-        storage_client = storage.Client(project=project_id)
-        bucket = storage_client.bucket(gcs_bucket)
-        blob = bucket.blob(gcs_blob_path)
-        file_content = blob.download_as_text()
+        storage_client = storage.Client()
+        bucket = storage_client.bucket(bucket_name)
+        blob = bucket.blob(source_blob_name)
+        data = blob.download_as_text()
+        logging.info(f"File {source_blob_name} downloaded from bucket {bucket_name}.")
+        return json.loads(data)
+    except GoogleAPIError as e:
+        logging.error(f"Error downloading file from GCS: {e}")
+        return None
 
-        # Step 2: Parse and process JSON
-        json_records = [json.loads(line) for line in file_content.strip().splitlines()]
-        df = pd.DataFrame(json_records)
-
-        # 🔧 Step 3: Process Data - PLACEHOLDER for custom logic
-        # Example: Drop nulls and filter
-        df.dropna(subset=["important_column"], inplace=True)
-        df = df[df["status"] == "active"]
-
-        # Step 4: Load to BigQuery
-        bq_client = bigquery.Client(project=project_id)
-        job_config = bigquery.LoadJobConfig(
-            write_disposition=write_disposition,
-            autodetect=True,
-        )
-
-        job = bq_client.load_table_from_dataframe(
-            df,
-            destination=f"{project_id}.{dataset_id}.{table_id}",
-            job_config=job_config
-        )
-        job.result()  # Wait for job to finish
-
-        audit_output["row_count"] = len(df)
-        audit_output["status"] = "SUCCESS"
-
-    except GoogleAPIError as api_err:
-        audit_output["error"] = str(api_err)
+def transform_data(data):
+    """Transform the data. Modify this function for specific transformations."""
+    try:
+        # # Example transformation: Add a new field to each record
+        # for record in data:
+        #     record['processed'] = True
+        logging.info("Data transformation completed.")
+        return data
     except Exception as e:
-        audit_output["error"] = str(e)
+        logging.error(f"Error during data transformation: {e}")
+        raise
 
-    job_end = datetime.utcnow()
-    audit_output["job_end_time"] = job_end.isoformat()
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=2, max=10))
+def load_data_to_bigquery(data, dataset_id, table_id):
+    """Load data into BigQuery."""
+    try:
+        client = bigquery.Client()
+        table_ref = client.dataset(dataset_id).table(table_id)
+        job_config = bigquery.LoadJobConfig(
+            schema = [
+                bigquery.SchemaField("EMPLOYEE_ID", "STRING"),
+                bigquery.SchemaField("FIRST_NAME", "STRING"),
+                bigquery.SchemaField("LAST_NAME", "STRING"),
+                bigquery.SchemaField("EMAIL", "STRING"),
+                bigquery.SchemaField("PHONE_NUMBER", "STRING"),
+                bigquery.SchemaField("HIRE_DATE", "STRING"),
+                bigquery.SchemaField("JOB_ID", "STRING"),
+                bigquery.SchemaField("SALARY", "NUMERIC"),
+                bigquery.SchemaField("COMMISSION_PCT", "NUMERIC"),
+                bigquery.SchemaField("MANAGER_ID", "STRING"),
+                bigquery.SchemaField("DEPARTMENT_ID", "STRING"),
+            ],
+            source_format=bigquery.SourceFormat.NEWLINE_DELIMITED_JSON,
+            write_disposition=bigquery.WriteDisposition.WRITE_APPEND,
+        )
+        job = client.load_table_from_json(data, table_ref, job_config=job_config)
+        job.result()  # Wait for the job to complete
+        logging.info(f"Data loaded into BigQuery table {dataset_id}.{table_id}.")
+    except GoogleAPIError as e:
+        logging.error(f"Error loading data to BigQuery: {e}")
+        raise
 
-    return audit_output
+def main(bucket_name, source_blob_name, dataset_id, table_id):
+    """Main function to orchestrate the process."""
+    try:
+        # Step 1: Download JSON from GCS
+        data = download_json_from_gcs(bucket_name, source_blob_name)
+
+        # Step 2: Transform the data
+        transformed_data = transform_data(data)
+
+        # Step 3: Load data into BigQuery
+        load_data_to_bigquery(transformed_data, dataset_id, table_id)
+
+        logging.info("Process completed successfully.")
+    except Exception as e:
+        logging.error(f"Process failed: {e}")
+    
