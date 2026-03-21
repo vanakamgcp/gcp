@@ -1,0 +1,144 @@
+Generate a production-ready Python script to load data from a Google Cloud Storage landing bucket into an existing BigQuery RAW table.
+
+============================================================
+STRICT CONSTRAINTS
+============================================================
+- The BigQuery table already exists.
+- DO NOT create or modify the table schema.
+- Preserve ALL columns from the source file.
+- Do NOT reduce schema to only mandatory columns.
+- Validate only specified mandatory columns without affecting other columns.
+- Use native Python and official Google Cloud libraries only:
+    - google-cloud-storage
+    - google-cloud-bigquery
+- Do NOT use pandas or any third-party libraries unless absolutely required.
+- Use BigQuery load jobs (NOT row-by-row inserts).
+- Code must be suitable for Cloud Run / Cloud Functions deployment.
+- The script must be modular and production structured.
+
+============================================================
+BUCKET DETAILS
+============================================================
+Landing Bucket: gcs_feb26_land_bkt
+Archive Bucket: gcs_feb26_arch_bkt
+Error Bucket: gcs_feb26_err_bkt
+
+============================================================
+TARGET TABLE
+============================================================
+Table Name: ds_raw_feb26.employees
+File Format: CSV
+Load Type: WRITE_APPEND
+
+============================================================
+FILE VALIDATION RULES
+============================================================
+- Expected File Name Pattern: employees_(\d{8})\.csv
+- Validate date format in filename: YES
+- Allowed Extensions: <EXTENSIONS>
+- Header Present (if CSV): YES
+- Delimiter (if CSV): COMMA
+- Reject Empty File: YES
+- Multiple Files Allowed Per Execution: NO
+
+If any validation fails:
+- Do NOT load data
+- Move file to error bucket
+- Log structured failure message
+
+============================================================
+MANDATORY DATA CHECKS (RAW LAYER ONLY)
+============================================================
+- Required Columns That Must Exist In File:
+  N/A
+
+- Mandatory Non-Null Columns:
+  EMPLOYEE_ID
+
+IMPORTANT:
+- Even if only one column is mandatory, ALL columns must still be loaded.
+- Use existing BigQuery table schema as source of truth.
+- Fail entire load if mandatory column contains NULL values.
+- Do NOT partially load data.
+
+============================================================
+ROW COUNT VALIDATION
+============================================================
+- Compare file row count with BigQuery loaded row count: YES
+- Allowed mismatch threshold: 0
+- Fail if threshold exceeded.
+
+============================================================
+FILE MOVEMENT LOGIC
+============================================================
+On SUCCESS:
+- Move file from landing bucket to:
+  archive-bucket/YYYY/MM/DD/
+
+On FAILURE:
+- Move file from landing bucket to:
+  error-bucket/YYYY/MM/DD/
+
+File movement must be handled inside proper exception blocks.
+
+============================================================
+PROCESS FLOW LOGGING (MANDATORY)
+============================================================
+The script must log major process steps clearly, including:
+
+- Script started
+- File validation started
+- File validation completed
+- Data validation started
+- Data validation completed
+- BigQuery load started
+- BigQuery load completed
+- File movement started
+- File movement completed
+- Script finished
+
+Each step must log a structured message.
+
+============================================================
+FINAL METRICS CAPTURE (MANDATORY)
+============================================================
+At the end of execution (success or failure), create a final metrics dictionary in JSON format containing:
+
+- job_name
+- batch_id (If not provided, generate UUID)
+- file_name
+- file_row_count
+- start_time
+- end_time
+- rows_loaded
+- job_status (SUCCESS / FAILED)
+- error_message (If no error, set as "N/A")
+
+IMPORTANT:
+- These metrics must be captured in a single dictionary object.
+- The metrics dictionary must be logged in structured JSON format.
+- This structure must remain consistent for reuse across other jobs.
+- Do NOT include dataset name or other unnecessary fields.
+
+============================================================
+ERROR HANDLING
+============================================================
+- Fail fast on validation errors.
+- Do NOT partially load data.
+- Always ensure file is moved (archive or error).
+- Use proper try/except/finally blocks.
+- Ensure idempotent behavior.
+
+============================================================
+CODE STRUCTURE REQUIREMENTS
+============================================================
+Implement modular functions such as:
+
+- validate_file()
+- validate_data()
+- load_to_bigquery()
+- move_file()
+- log_process_step()
+- capture_final_metrics()
+
+Ensure clean, production-ready, readable structure.
